@@ -37,3 +37,18 @@ A running, chronological record of decisions, dead ends, and fixes. Newest entri
   gh-pages. Runtime dep: fflate (MIT) for ZIP export.
 - Wrote SPEC.md (bounded v1 scope + non-goals) and ARCHITECTURE.md (pure framework-free core
   + React UI; no backend; privacy as an architectural invariant).
+
+## Phase 3.5 — UI/UX design system (ui-ux-pro-max workflow)
+- Cloned the design-intelligence skill to `../uipro`; smoke-tested `search.py` (real `src` path).
+- Step 1 brief: privacy-first contacts data utility/workbench; audience = people migrating/
+  cleaning contacts; keywords minimal/clean/trustworthy/professional/data-dense; stack = react.
+- Step 2: generated `design-system/MASTER.md` → Pattern *Minimal Single Column* (landing) +
+  Style *Swiss Modernism 2.0*, Inter typography, full light/dark.
+- Step 2b: per-page overrides — `workbench.md` (data-dense table/dashboard), `landing.md`
+  (minimal hero + dropzone), `export-dialog.md` (modal/form).
+- Step 3 domain deep-dives folded into MASTER: style (swiss/minimal), color (privacy/dev-tool
+  palettes), typography (Minimal Swiss / Inter), ux (loading/empty/responsive-table guidelines).
+- Step 4 stack guidelines (react): useState/reducer, batching, memoization, profile-first.
+- Step 5: wrote `DESIGN_NOTES.md` — final contract. Decision: light-default + full dark mode,
+  single **indigo** accent, functional **emerald** for privacy/trust signals, 8px spacing, Inter.
+- No-attribution verified: no skill/brand strings present in any committed design file.
