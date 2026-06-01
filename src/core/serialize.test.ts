@@ -79,7 +79,7 @@ describe('CSV export', () => {
     const cs = parseVcf(sample).contacts
     const csv = toCsv(cs)
     expect(csv.charCodeAt(0)).toBe(0xfeff) // BOM
-    const lines = csv.replace(/^﻿/, '').trim().split('\r\n')
+    const lines = csv.slice(1).trim().split('\r\n')
     expect(lines[0]).toContain('Name')
     expect(lines[0]).toContain('E-mail 1 - Value')
     expect(lines[1]).toContain('Jane Public')
@@ -87,7 +87,7 @@ describe('CSV export', () => {
   })
 
   it('quotes cells containing commas or quotes', () => {
-    const c = parseVcf('BEGIN:VCARD\nVERSION:3.0\nFN:Doe\, John\nEND:VCARD').contacts[0]
+    const c = parseVcf('BEGIN:VCARD\nVERSION:3.0\nFN:Doe, John\nEND:VCARD').contacts[0]
     const csv = toCsv([c])
     expect(csv).toContain('"Doe, John"')
   })

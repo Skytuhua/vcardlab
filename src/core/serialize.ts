@@ -17,7 +17,10 @@ function esc(value: string): string {
 }
 
 function hasNonAscii(s: string): boolean {
-  return /[^\x00-\x7F]/.test(s)
+  for (let i = 0; i < s.length; i++) {
+    if (s.charCodeAt(i) > 0x7f) return true
+  }
+  return false
 }
 
 /** Fold a single logical line to <=75 octets using CRLF + single space continuation. */
