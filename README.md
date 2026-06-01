@@ -34,6 +34,20 @@ People switching phones (Android ⇄ iPhone), consolidating Google / iCloud / Ou
 books, cleaning up years of duplicates, preparing a contact list for a CRM or mail-merge, or
 splitting a giant export so a picky phone will import it.
 
+## Don't have a `.vcf` file yet?
+
+vcardlab works on a vCard (`.vcf`) file. Here's how to export your contacts as one:
+
+- **iPhone / iCloud:** On a computer, open [icloud.com/contacts](https://www.icloud.com/contacts),
+  select all contacts, then the settings (gear) icon → **Export vCard…**
+- **Google / Android:** On a computer, open [contacts.google.com](https://contacts.google.com) →
+  **Export** → choose **vCard (.vcf)**. On the phone: Contacts app → Settings → Import/Export →
+  **Export to .vcf**.
+- **Outlook:** Export your contacts, import them into Google or iCloud Contacts, then export as
+  vCard. (vcardlab reads vCard `.vcf` files; CSV is export-only.)
+
+Then drop that `.vcf` file into the app.
+
 ## Features
 
 | | |
