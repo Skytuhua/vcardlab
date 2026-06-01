@@ -1,0 +1,312 @@
+{
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\eslint.config.js": {
+    "mtime": 1780322149.0968623,
+    "ast_hash": "f4436a3d1532ce03bdc33a20b59f42fc",
+    "semantic_hash": "f4436a3d1532ce03bdc33a20b59f42fc"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\package.json": {
+    "mtime": 1780322149.0988615,
+    "ast_hash": "b67f46c3b968f84bb4c96fe8efb8d044",
+    "semantic_hash": "b67f46c3b968f84bb4c96fe8efb8d044"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\App.tsx": {
+    "mtime": 1780322149.100865,
+    "ast_hash": "9dfbb857108234fc5a732a179a0e6de6",
+    "semantic_hash": "9dfbb857108234fc5a732a179a0e6de6"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\CleanDialog.tsx": {
+    "mtime": 1780322149.100865,
+    "ast_hash": "b9ba7db8c1c327a11470ce7f329bcf59",
+    "semantic_hash": "b9ba7db8c1c327a11470ce7f329bcf59"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\ConfirmDialog.tsx": {
+    "mtime": 1780322149.102372,
+    "ast_hash": "cacd6813097d2b5152bd75293adc6f18",
+    "semantic_hash": "cacd6813097d2b5152bd75293adc6f18"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\ContactDetail.tsx": {
+    "mtime": 1780322149.102372,
+    "ast_hash": "a0bcf5a4744e8b68f4b170768314096e",
+    "semantic_hash": "a0bcf5a4744e8b68f4b170768314096e"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\ContactTable.tsx": {
+    "mtime": 1780322149.1033812,
+    "ast_hash": "a0a82e6e3ac08c26f95d456cfde2f192",
+    "semantic_hash": "a0a82e6e3ac08c26f95d456cfde2f192"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\Dropzone.tsx": {
+    "mtime": 1780322149.1033812,
+    "ast_hash": "958b6707499292e6ceccc1ba471f86a3",
+    "semantic_hash": "958b6707499292e6ceccc1ba471f86a3"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\DuplicatesDialog.tsx": {
+    "mtime": 1780322149.1043782,
+    "ast_hash": "edbce1f92428ab349bd40d9c846cbd4c",
+    "semantic_hash": "edbce1f92428ab349bd40d9c846cbd4c"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\ExportDialog.tsx": {
+    "mtime": 1780322149.1053784,
+    "ast_hash": "7fd368e1eddd9e181ee5e20b2e3e3b97",
+    "semantic_hash": "7fd368e1eddd9e181ee5e20b2e3e3b97"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\Modal.tsx": {
+    "mtime": 1780322149.1053784,
+    "ast_hash": "2dd5bea42181321d30f9bff48beafdd4",
+    "semantic_hash": "2dd5bea42181321d30f9bff48beafdd4"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\Toast.tsx": {
+    "mtime": 1780322149.106378,
+    "ast_hash": "9236b1ff4a1859178e262945c8eee611",
+    "semantic_hash": "9236b1ff4a1859178e262945c8eee611"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\icons.tsx": {
+    "mtime": 1780322149.106378,
+    "ast_hash": "62d876d55c508d263ec683e2565dc086",
+    "semantic_hash": "62d876d55c508d263ec683e2565dc086"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\components\\ui.tsx": {
+    "mtime": 1780322149.1073806,
+    "ast_hash": "81c51c31105065cbbd250645b160a71b",
+    "semantic_hash": "81c51c31105065cbbd250645b160a71b"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\clean.test.ts": {
+    "mtime": 1780322149.1083772,
+    "ast_hash": "3cc910d89d5664348e61d90bd11cd574",
+    "semantic_hash": "3cc910d89d5664348e61d90bd11cd574"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\clean.ts": {
+    "mtime": 1780322149.1088872,
+    "ast_hash": "b9ecdaa375a32d0608d986b490aa98a9",
+    "semantic_hash": "b9ecdaa375a32d0608d986b490aa98a9"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\dedupe.test.ts": {
+    "mtime": 1780322149.1098914,
+    "ast_hash": "9dbb3f4d557a41e3192124c0cd5a8fc6",
+    "semantic_hash": "9dbb3f4d557a41e3192124c0cd5a8fc6"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\dedupe.ts": {
+    "mtime": 1780322149.1108875,
+    "ast_hash": "cbc66484a9004b4431d650b9f227631a",
+    "semantic_hash": "cbc66484a9004b4431d650b9f227631a"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\index.ts": {
+    "mtime": 1780322149.1108875,
+    "ast_hash": "5b08fc1ebd2bdb7a192aaa04e9070db6",
+    "semantic_hash": "5b08fc1ebd2bdb7a192aaa04e9070db6"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\model.ts": {
+    "mtime": 1780322149.1118896,
+    "ast_hash": "20b62564b174698a1324d90d0c9ddf5b",
+    "semantic_hash": "20b62564b174698a1324d90d0c9ddf5b"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\parse.test.ts": {
+    "mtime": 1780322149.1129172,
+    "ast_hash": "660ef0f6ab84648237fd2cd0fe7d0cc9",
+    "semantic_hash": "660ef0f6ab84648237fd2cd0fe7d0cc9"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\parse.ts": {
+    "mtime": 1780322149.1129172,
+    "ast_hash": "cc4b0e9d464c2d39ae694e5d6d3c8626",
+    "semantic_hash": "cc4b0e9d464c2d39ae694e5d6d3c8626"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\quotedPrintable.ts": {
+    "mtime": 1780322149.1139178,
+    "ast_hash": "8cf990ebd0c8fe43de4285dc38fcc4a9",
+    "semantic_hash": "8cf990ebd0c8fe43de4285dc38fcc4a9"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\serialize.test.ts": {
+    "mtime": 1780322149.1149209,
+    "ast_hash": "79313375635ec9c81db1ab4185f8404a",
+    "semantic_hash": "79313375635ec9c81db1ab4185f8404a"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\serialize.ts": {
+    "mtime": 1780322149.1149209,
+    "ast_hash": "e935332c200dec5c1879be8b1f5cfc34",
+    "semantic_hash": "e935332c200dec5c1879be8b1f5cfc34"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\split.test.ts": {
+    "mtime": 1780322149.1159177,
+    "ast_hash": "ead4560269bf62b58e195e99aaf7fe6a",
+    "semantic_hash": "ead4560269bf62b58e195e99aaf7fe6a"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\split.ts": {
+    "mtime": 1780322149.1159177,
+    "ast_hash": "fd9af1a9dbde96829cab2c23ab1434b5",
+    "semantic_hash": "fd9af1a9dbde96829cab2c23ab1434b5"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\core\\zip.ts": {
+    "mtime": 1780322149.1169176,
+    "ast_hash": "d3404b8a75fa0acefeb32846f134f60a",
+    "semantic_hash": "d3404b8a75fa0acefeb32846f134f60a"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\fontsource.d.ts": {
+    "mtime": 1780322149.1169176,
+    "ast_hash": "993b94d74ea7b71bcb03e875d0259a28",
+    "semantic_hash": "993b94d74ea7b71bcb03e875d0259a28"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\lib\\download.ts": {
+    "mtime": 1780322149.1189177,
+    "ast_hash": "1552616528cc066506f2c1353f292a0c",
+    "semantic_hash": "1552616528cc066506f2c1353f292a0c"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\lib\\sample.ts": {
+    "mtime": 1780322149.1199176,
+    "ast_hash": "cc72197883667a1ffef5b0c3578da699",
+    "semantic_hash": "cc72197883667a1ffef5b0c3578da699"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\main.tsx": {
+    "mtime": 1780322149.1199176,
+    "ast_hash": "94a35dca753699e087c5bbd7a2e48997",
+    "semantic_hash": "94a35dca753699e087c5bbd7a2e48997"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\state\\useContacts.ts": {
+    "mtime": 1780322149.1209185,
+    "ast_hash": "d72d68825c1fba9a4f73b49788427c98",
+    "semantic_hash": "d72d68825c1fba9a4f73b49788427c98"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\state\\useMediaQuery.ts": {
+    "mtime": 1780322149.1209185,
+    "ast_hash": "2f1df519c0296d10eb111d5beec9a7e7",
+    "semantic_hash": "2f1df519c0296d10eb111d5beec9a7e7"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\src\\state\\useTheme.ts": {
+    "mtime": 1780322149.1219184,
+    "ast_hash": "fba4577741fc03c04b17b827ddea6a51",
+    "semantic_hash": "fba4577741fc03c04b17b827ddea6a51"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\tsconfig.app.json": {
+    "mtime": 1780322149.1219184,
+    "ast_hash": "4cd9dda3b62ff2a571c2419a75074a39",
+    "semantic_hash": "4cd9dda3b62ff2a571c2419a75074a39"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\tsconfig.json": {
+    "mtime": 1780322149.1230514,
+    "ast_hash": "852c3a5df14a4b43ac28e9554ebedf4a",
+    "semantic_hash": "852c3a5df14a4b43ac28e9554ebedf4a"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\tsconfig.node.json": {
+    "mtime": 1780322149.1230514,
+    "ast_hash": "1cd4c6b260b0dccbad5bc0a25029f390",
+    "semantic_hash": "1cd4c6b260b0dccbad5bc0a25029f390"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\vite.config.ts": {
+    "mtime": 1780322149.1240535,
+    "ast_hash": "cc9128170482e3eda194ab5d518483ad",
+    "semantic_hash": "cc9128170482e3eda194ab5d518483ad"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\vitest.config.ts": {
+    "mtime": 1780322149.1262164,
+    "ast_hash": "a6a22cbb84b6093d73336b16e98efd11",
+    "semantic_hash": "a6a22cbb84b6093d73336b16e98efd11"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\ARCHITECTURE.md": {
+    "mtime": 1780322149.0788114,
+    "ast_hash": "271bb896d6a97675cf14eacd69501fa5",
+    "semantic_hash": "271bb896d6a97675cf14eacd69501fa5"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\BUILD_LOG.md": {
+    "mtime": 1780322149.0798101,
+    "ast_hash": "79c75f6d01d4eba8b09d3cc0f7fcd81f",
+    "semantic_hash": "79c75f6d01d4eba8b09d3cc0f7fcd81f"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\CHANGELOG.md": {
+    "mtime": 1780322149.0808115,
+    "ast_hash": "0db2197b2235031342d8f0c231819ac0",
+    "semantic_hash": "0db2197b2235031342d8f0c231819ac0"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\DESIGN_NOTES.md": {
+    "mtime": 1780322149.0808115,
+    "ast_hash": "e4056803a44827e56f360748cdc8f587",
+    "semantic_hash": "e4056803a44827e56f360748cdc8f587"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\POLISH_LOG.md": {
+    "mtime": 1780322149.0823176,
+    "ast_hash": "1d3eb6c46ab2bbfcf142956cc3f46026",
+    "semantic_hash": "1d3eb6c46ab2bbfcf142956cc3f46026"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\README.md": {
+    "mtime": 1780322149.0833235,
+    "ast_hash": "db555427f2eb9ed172526294ed603032",
+    "semantic_hash": "db555427f2eb9ed172526294ed603032"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\RESEARCH.md": {
+    "mtime": 1780322149.0833235,
+    "ast_hash": "c3e45cbdcf4745e9ec0b51ae5e23830c",
+    "semantic_hash": "c3e45cbdcf4745e9ec0b51ae5e23830c"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\REVIEW.md": {
+    "mtime": 1780322149.0833235,
+    "ast_hash": "afade6faace09a1094d2fd6fbaf6e1d6",
+    "semantic_hash": "afade6faace09a1094d2fd6fbaf6e1d6"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\SPEC.md": {
+    "mtime": 1780322149.0843236,
+    "ast_hash": "63e1a114eee93bd2cc61ffc7cb8f2445",
+    "semantic_hash": "63e1a114eee93bd2cc61ffc7cb8f2445"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\design-system\\MASTER.md": {
+    "mtime": 1780322149.0853221,
+    "ast_hash": "f5c922f7829714afcfaa9b5f8e47537b",
+    "semantic_hash": "f5c922f7829714afcfaa9b5f8e47537b"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\design-system\\pages\\export-dialog.md": {
+    "mtime": 1780322149.0863242,
+    "ast_hash": "7c03d1ced972d59bb12b24e16b2df0da",
+    "semantic_hash": "7c03d1ced972d59bb12b24e16b2df0da"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\design-system\\pages\\landing.md": {
+    "mtime": 1780322149.0863242,
+    "ast_hash": "d2531a0671cd52070dcdd0251a78bb22",
+    "semantic_hash": "d2531a0671cd52070dcdd0251a78bb22"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\design-system\\pages\\workbench.md": {
+    "mtime": 1780322149.0873232,
+    "ast_hash": "d132586b11b89042d1ceb1c4551d1b97",
+    "semantic_hash": "d132586b11b89042d1ceb1c4551d1b97"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\index.html": {
+    "mtime": 1780322149.0968623,
+    "ast_hash": "e22c7f6e630f8e0ce0bdfcd7cbf02dd5",
+    "semantic_hash": "e22c7f6e630f8e0ce0bdfcd7cbf02dd5"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\detail.png": {
+    "mtime": 1780322149.088322,
+    "ast_hash": "61ffce93eb707fbf4a92567add307381",
+    "semantic_hash": "61ffce93eb707fbf4a92567add307381"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\duplicates.png": {
+    "mtime": 1780322149.089323,
+    "ast_hash": "51dfe42d59acdfce10eb28b4b44d1512",
+    "semantic_hash": "51dfe42d59acdfce10eb28b4b44d1512"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\export.png": {
+    "mtime": 1780322149.090325,
+    "ast_hash": "6c57f143c33a2644fe8f3ff2451fcf2a",
+    "semantic_hash": "6c57f143c33a2644fe8f3ff2451fcf2a"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\landing.png": {
+    "mtime": 1780322149.0918303,
+    "ast_hash": "cf5bef8567286622915dc3f4e34dd6c5",
+    "semantic_hash": "cf5bef8567286622915dc3f4e34dd6c5"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\mobile.png": {
+    "mtime": 1780322149.0923457,
+    "ast_hash": "ecb9a78b3a342b3b5e4a01dca0f3ef18",
+    "semantic_hash": "ecb9a78b3a342b3b5e4a01dca0f3ef18"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\workbench-dark.png": {
+    "mtime": 1780322149.0948565,
+    "ast_hash": "9a7256c2d7a3fcb00f7b8e4755f56268",
+    "semantic_hash": "9a7256c2d7a3fcb00f7b8e4755f56268"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\docs\\screenshots\\workbench.png": {
+    "mtime": 1780322149.095862,
+    "ast_hash": "390c68260619b2821dc3424e068259e0",
+    "semantic_hash": "390c68260619b2821dc3424e068259e0"
+  },
+  "C:\\Users\\user\\Documents\\Claude\\mission-control\\state\\graphs\\_product_clones\\vcardlab\\public\\favicon.svg": {
+    "mtime": 1780322149.0998642,
+    "ast_hash": "ce1380ea647fd5f7d012885e00d2c124",
+    "semantic_hash": "ce1380ea647fd5f7d012885e00d2c124"
+  }
+}

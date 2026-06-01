@@ -1,0 +1,7 @@
+cache/
+.graphify_python
+.graphify_root
+.graphify_labels.json
+.pending_changes
+.rebuild.lock
+needs_update
