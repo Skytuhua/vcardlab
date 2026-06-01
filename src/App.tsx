@@ -86,7 +86,7 @@ export default function App() {
         const looksLikeVcard = files.some((f) => /BEGIN:VCARD/i.test(f.text))
         if (!looksLikeVcard) {
           const names = files.map((f) => f.name).join(', ')
-          addToast(`${names} doesn't look like a vCard (.vcf) file.`, 'error')
+          addToast(`${names} doesn't look like a vCard (.vcf) file. If it's a CSV, import it to Google or iCloud Contacts first, then export as vCard.`, 'error')
         } else {
           addToast('No contacts found in those files.', 'error')
         }
@@ -333,8 +333,10 @@ function Hero({ onFiles, onSample }: { onFiles: (f: { name: string; text: string
       </div>
 
       <button onClick={onSample} className="mt-4 cursor-pointer text-sm font-medium text-accent hover:underline">
-        or try it with a sample address book
+        or try it with a sample address book (fake contacts — no export needed)
       </button>
+
+      <ExportHelp />
 
       <ul className="mt-10 grid w-full gap-3 text-left sm:grid-cols-3">
         <Benefit title="De-duplicate" body="Find matches by email, phone or name and merge them cleanly." />
@@ -351,6 +353,41 @@ function Benefit({ title, body }: { title: string; body: string }) {
       <h3 className="text-sm font-semibold text-fg">{title}</h3>
       <p className="mt-1 text-sm text-muted">{body}</p>
     </li>
+  )
+}
+
+// Help for first-timers who don't yet have a .vcf file: how to export contacts
+// from the common sources. Native <details> — collapsed by default, no extra state.
+function ExportHelp() {
+  return (
+    <details className="mt-6 w-full max-w-xl rounded-xl border border-border bg-surface text-left">
+      <summary className="cursor-pointer list-none rounded-xl px-4 py-3 text-sm font-medium text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <span className="text-accent">Don’t have a .vcf file yet?</span>{' '}
+        <span className="text-muted">How to export your contacts</span>
+      </summary>
+      <div className="border-t border-border px-4 py-3 text-sm text-muted">
+        <ul className="flex flex-col gap-2">
+          <li>
+            <strong className="text-fg">iPhone / iCloud:</strong> on a computer, open{' '}
+            <a href="https://www.icloud.com/contacts" target="_blank" rel="noreferrer noopener" className="font-medium text-accent hover:underline">
+              icloud.com/contacts
+            </a>
+            , select all contacts, then the settings (gear) icon → <em>Export vCard…</em>
+          </li>
+          <li>
+            <strong className="text-fg">Google / Android:</strong> on a computer, open{' '}
+            <a href="https://contacts.google.com" target="_blank" rel="noreferrer noopener" className="font-medium text-accent hover:underline">
+              contacts.google.com
+            </a>{' '}
+            → <em>Export</em> → choose <em>vCard (.vcf)</em>. (On the phone: Contacts app → Settings → Import/Export → <em>Export to .vcf</em>.)
+          </li>
+          <li>
+            <strong className="text-fg">Outlook:</strong> export your contacts, then import them into Google or iCloud and export as vCard — vcardlab reads vCard <code className="rounded bg-muted-surface px-1 py-0.5 text-xs">.vcf</code> files.
+          </li>
+        </ul>
+        <p className="mt-3">Then drag that .vcf file into the box above.</p>
+      </div>
+    </details>
   )
 }
 
@@ -439,7 +476,7 @@ function WarningBanner({ count, messages, onDismiss }: { count: number; messages
         </span>
         <div className="flex-1">
           <p className="font-medium text-warning">
-            {count} card{count === 1 ? '' : 's'} had issues while importing (they were skipped or partially read).
+            {count} issue{count === 1 ? '' : 's'} while importing — some cards were skipped or partially read.
           </p>
           <ul className="mt-1 list-inside list-disc text-warning/90">
             {messages.map((m, i) => (

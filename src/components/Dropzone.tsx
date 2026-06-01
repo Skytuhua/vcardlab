@@ -102,8 +102,9 @@ export function Dropzone({ onFiles, compact = false }: DropzoneProps) {
         {dragging ? 'Drop to load your contacts' : 'Drop .vcf files here, or click to browse'}
       </p>
       <p className="mt-1 max-w-sm text-sm text-muted">
-        Load one or many vCard files from your phone, Google, iCloud or Outlook. They’re read
-        locally in your browser — nothing is uploaded.
+        Load one or many vCard files from your phone, Google, iCloud or Outlook. New to this? See
+        “How to export your contacts” just below. They’re read locally in your browser — nothing is
+        uploaded.
       </p>
       <input
         ref={inputRef}

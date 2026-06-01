@@ -108,7 +108,7 @@ export function CleanDialog({ contacts, onApply, onClose }: Props) {
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-sm font-medium text-fg">{op.label}</span>
                   <span className="shrink-0 text-xs text-muted tnum">
-                    {counts[op.key] > 0 ? `${counts[op.key]} affected` : 'none'}
+                    {counts[op.key] > 0 ? `${counts[op.key]} affected` : '0 affected'}
                   </span>
                 </div>
                 <p className="mt-0.5 text-xs text-muted">{op.description}</p>
