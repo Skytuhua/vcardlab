@@ -11,6 +11,10 @@ const base = (props: P) => ({
   strokeWidth: 1.8,
   strokeLinecap: 'round' as const,
   strokeLinejoin: 'round' as const,
+  // Icons are decorative; their meaning comes from adjacent text or the parent
+  // button's aria-label, so hide them from the screen-reader accessible tree.
+  'aria-hidden': true,
+  focusable: false,
   ...props,
 })
 
