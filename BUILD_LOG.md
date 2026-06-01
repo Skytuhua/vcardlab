@@ -98,3 +98,21 @@ Three parallel adversarial audit subagents returned high-signal findings; all ma
   history (25); distinct "not a vCard" import message; full address editor (spec §3 gap closed).
 - Added 7 unit tests for the new behaviors → **53 tests pass**, clean lint, green build.
 - Re-verified in-browser: all states screenshot clean, exports valid, **zero external requests**.
+
+## Phase 6/7/8 — package & ship (complete)
+- Wrote README (with screenshots), CHANGELOG (v1.0.0), REVIEW.md.
+- Built a **portable web bundle** (`vite build --base=./`) so the artifact runs from any path;
+  verified it loads + works from a clean unzip (heading renders, sample loads, zero external
+  requests). Zipped as `vcardlab-v1.0.0-web.zip` (+ `.sha256`).
+- Redeployed the latest build to GitHub Pages — verified live (HTTP 200) and that the
+  post-review build (virtualized list) is what's served.
+- Set repo homepage + topics. Created tagged release **v1.0.0** with notes + both artifacts;
+  re-downloaded the asset and confirmed its SHA-256 matches the original.
+- Verified sole authorship (Skytuhua only) and that no AI/co-author/generated trailers exist
+  anywhere in history.
+
+### Final deliverables
+- Repo: https://github.com/Skytuhua/vcardlab
+- Live app: https://skytuhua.github.io/vcardlab/
+- Release: https://github.com/Skytuhua/vcardlab/releases/tag/v1.0.0
+- 53 unit tests pass · clean ESLint · green production build.
