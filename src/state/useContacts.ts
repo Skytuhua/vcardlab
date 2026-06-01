@@ -1,5 +1,14 @@
-// Central working-set state: the contact list, selection, parse warnings, and a one-level
-// undo history for destructive operations. Pure-core functions do the actual work.
+// Central working-set state: the contact list, selection, parse warnings, and a bounded
+// multi-level undo history for destructive operations. Pure-core functions do the work.
+
+// Cap how many prior snapshots we retain so a long editing session on a large address book
+// can't grow memory without bound.
+const MAX_HISTORY = 25
+
+function pushHistory(history: Contact[][], snapshot: Contact[]): Contact[][] {
+  const next = [...history, snapshot]
+  return next.length > MAX_HISTORY ? next.slice(next.length - MAX_HISTORY) : next
+}
 
 import { useCallback, useMemo, useReducer } from 'react'
 import {
@@ -39,7 +48,7 @@ function reducer(state: State, action: Action): State {
         contacts,
         warnings,
         selected: new Set(),
-        history: action.append ? [...state.history, state.contacts] : [],
+        history: action.append ? pushHistory(state.history, state.contacts) : [],
       }
     }
     case 'setContacts': {
@@ -47,7 +56,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         contacts: action.contacts,
         selected: new Set(),
-        history: action.record ? [...state.history, state.contacts] : state.history,
+        history: action.record ? pushHistory(state.history, state.contacts) : state.history,
       }
     }
     case 'toggleSelect': {

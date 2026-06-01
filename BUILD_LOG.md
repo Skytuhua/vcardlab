@@ -52,3 +52,49 @@ A running, chronological record of decisions, dead ends, and fixes. Newest entri
 - Step 5: wrote `DESIGN_NOTES.md` — final contract. Decision: light-default + full dark mode,
   single **indigo** accent, functional **emerald** for privacy/trust signals, 8px spacing, Inter.
 - No-attribution verified: no skill/brand strings present in any committed design file.
+
+## Phase 4 — Build
+- Core implemented framework-free in src/core: model, quoted-printable, parser (2.1/3.0/4.0,
+  folding, QP soft-breaks, grouped props, lossless `extra`), serializers (vCard/CSV/JSON with
+  line-folding + QP for 2.1 non-ASCII), dedupe (union-find by email/phone/name + field-union
+  merge), clean (strip photos, drop empty, trim, phone-normalize, mojibake repair), split/zip.
+- 46 unit tests, ~91% core coverage. Fixed two test bugs (JS template-literal `\,`/`\n`
+  escaping; unrealistic phone in a dedupe test) — code was correct.
+- UI: Vite+React+TS+Tailwind v4. Self-hosted Inter via @fontsource-variable/inter so NO
+  external font request is made (verified) — keeps the privacy promise literally true.
+  Components: Dropzone, ContactTable (table≥md / cards<md), ContactDetail editor, Export/
+  Duplicates/Clean dialogs, accessible Modal (focus trap + Esc), Toast, theme (light default
+  + full dark, system-aware), undo.
+- Verified in a real browser (Playwright): all 11 states screenshot clean; load→merge-all
+  (6→4)→export vCard/CSV/ZIP all produce valid files; UTF-8 "José" preserved; **zero console
+  errors and zero external network requests in every state** (privacy verified).
+
+## Phase 6/7 prep — deploy
+- Commit signing was globally enabled and failed with the documented "missing source" error
+  (gh-pages commits in a temp worktree). Disabled signing globally (`commit.gpgsign false`);
+  unsigned commits under the owner identity are fine. Deployed `dist` to the `gh-pages`
+  branch; GitHub Pages building at https://skytuhua.github.io/vcardlab/ (added 404.html SPA
+  fallback). `base` path set to /vcardlab/ for the Pages build.
+
+## Phase 5 — review (in progress)
+- Functional + visual + privacy passes done by me directly (screenshots + download checks).
+- Launched 3 parallel adversarial review subagents (security/code-quality, accessibility/
+  design-fidelity, edge-case/UX) since no dedicated Workflow tool is exposed in this session.
+
+## Phase 5 — review findings & fixes (complete)
+Three parallel adversarial audit subagents returned high-signal findings; all material ones fixed:
+- **Security:** CSV formula-injection guard (`'` prefix); refuse auto-loading remote PHOTO URLs;
+  escape `extra`-property values/params to prevent vCard line injection. (No XSS/protopollution/
+  ReDoS/secret leakage found.)
+- **Correctness:** QP detection from header params (not whole-line substring); `sameAddress`
+  compares all 7 ADR components; keep first photo + preserve extras; keep photo-only cards;
+  octet-aware line folding; removed dead params.
+- **Accessibility:** desktop rows now keyboard-openable buttons; darkened `--muted` for ≥4.5:1
+  contrast on muted-surface; responsive detail grids.
+- **Design fidelity:** tokenized the warning banner (`--warning*`) and `--destructive-fg`/`--overlay`
+  (removed the only raw-color bypasses).
+- **UX:** virtualized the contact list (`@tanstack/react-virtual`) + deferred search — 5,000
+  contacts load in ~108ms rendering ~23 DOM rows; confirmation on bulk delete; capped undo
+  history (25); distinct "not a vCard" import message; full address editor (spec §3 gap closed).
+- Added 7 unit tests for the new behaviors → **53 tests pass**, clean lint, green build.
+- Re-verified in-browser: all states screenshot clean, exports valid, **zero external requests**.

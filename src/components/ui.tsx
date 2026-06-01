@@ -13,7 +13,7 @@ const variants: Record<Variant, string> = {
   ghost:
     'text-fg hover:bg-muted-surface disabled:opacity-40 disabled:cursor-not-allowed',
   danger:
-    'bg-destructive text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed',
+    'bg-destructive text-destructive-fg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed',
 }
 
 const sizes: Record<Size, string> = {

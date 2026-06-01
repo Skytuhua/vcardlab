@@ -1,6 +1,6 @@
 // View + edit a single contact in a modal. Edits are local until "Save changes".
 import { useState } from 'react'
-import { type Contact, type StructuredName, type TypedValue, displayName, emptyName } from '../core'
+import { type Address, type Contact, type StructuredName, type TypedValue, displayName, emptyName } from '../core'
 import { Modal } from './Modal'
 import { Button, Field, TextInput } from './ui'
 import { TrashIcon, PlusIcon } from './icons'
@@ -70,7 +70,7 @@ export function ContactDetail({ contact, onClose, onSave, onDelete }: Props) {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="First name">
             <TextInput value={draft.n?.given ?? ''} onChange={(e) => patchName('given', e.target.value)} />
           </Field>
@@ -85,7 +85,7 @@ export function ContactDetail({ contact, onClose, onSave, onDelete }: Props) {
             onChange={(e) => patch({ fn: e.target.value })}
           />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Organization">
             <TextInput
               value={(draft.org ?? []).join(', ')}
@@ -119,7 +119,7 @@ export function ContactDetail({ contact, onClose, onSave, onDelete }: Props) {
           onChange={(urls) => patch({ urls })}
         />
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Field label="Birthday">
             <TextInput value={draft.birthday ?? ''} placeholder="YYYY-MM-DD" onChange={(e) => patch({ birthday: e.target.value })} />
           </Field>
@@ -128,18 +128,7 @@ export function ContactDetail({ contact, onClose, onSave, onDelete }: Props) {
           </Field>
         </div>
 
-        {draft.addresses.length > 0 && (
-          <div>
-            <span className="mb-1 block text-xs font-medium text-muted">Addresses</span>
-            <div className="flex flex-col gap-2">
-              {draft.addresses.map((a, i) => (
-                <div key={i} className="rounded-lg border border-border bg-muted-surface px-3 py-2 text-sm text-fg">
-                  {[a.street, a.locality, a.region, a.postal, a.country].filter(Boolean).join(', ') || '(empty address)'}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <AddressEditor addresses={draft.addresses} onChange={(addresses) => patch({ addresses })} />
 
         <Field label="Notes">
           <textarea
@@ -155,11 +144,84 @@ export function ContactDetail({ contact, onClose, onSave, onDelete }: Props) {
 }
 
 function PhotoPreview({ contact }: { contact: Contact }) {
-  if (!contact.photo) return null
-  const src = contact.photo.isUri
-    ? contact.photo.data
-    : `data:${(contact.photo.mediaType || 'image/jpeg').includes('/') ? contact.photo.mediaType : 'image/' + (contact.photo.mediaType || 'jpeg').toLowerCase()};base64,${contact.photo.data}`
+  const photo = contact.photo
+  if (!photo) return null
+  // Privacy: never auto-load a remote (http/https) photo URL — that would beacon the user's
+  // IP and break the "nothing leaves your device" guarantee. Only inline/data images render.
+  if (photo.isUri && /^https?:/i.test(photo.data)) {
+    return (
+      <span className="grid h-12 w-12 place-items-center rounded-lg bg-muted-surface text-[10px] leading-tight text-muted">
+        remote
+      </span>
+    )
+  }
+  const src = photo.isUri
+    ? photo.data
+    : `data:${(photo.mediaType || 'image/jpeg').includes('/') ? photo.mediaType : 'image/' + (photo.mediaType || 'jpeg').toLowerCase()};base64,${photo.data}`
+  // Guard against rendering an enormous inline blob.
+  if (!photo.isUri && photo.data.length > 4_000_000) {
+    return (
+      <span className="grid h-12 w-12 place-items-center rounded-lg bg-muted-surface text-[10px] leading-tight text-muted">
+        large
+      </span>
+    )
+  }
   return <img src={src} alt="" className="h-12 w-12 rounded-lg object-cover" />
+}
+
+const EMPTY_ADDRESS: Address = {
+  types: ['HOME'],
+  poBox: '',
+  ext: '',
+  street: '',
+  locality: '',
+  region: '',
+  postal: '',
+  country: '',
+}
+
+function AddressEditor({ addresses, onChange }: { addresses: Address[]; onChange: (a: Address[]) => void }) {
+  function update(i: number, p: Partial<Address>) {
+    onChange(addresses.map((a, idx) => (idx === i ? { ...a, ...p } : a)))
+  }
+  return (
+    <div>
+      <span className="mb-1 block text-xs font-medium text-muted">Addresses</span>
+      <div className="flex flex-col gap-3">
+        {addresses.map((a, i) => (
+          <div key={i} className="rounded-lg border border-border p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-medium text-muted">Address {i + 1}</span>
+              <button
+                onClick={() => onChange(addresses.filter((_, idx) => idx !== i))}
+                aria-label="Remove address"
+                className="grid h-7 w-7 cursor-pointer place-items-center rounded-md text-muted hover:bg-destructive-soft hover:text-destructive"
+              >
+                <TrashIcon width={15} height={15} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-2">
+              <TextInput value={a.street} placeholder="Street" onChange={(e) => update(i, { street: e.target.value })} />
+              <div className="grid grid-cols-2 gap-2">
+                <TextInput value={a.locality} placeholder="City" onChange={(e) => update(i, { locality: e.target.value })} />
+                <TextInput value={a.region} placeholder="State / region" onChange={(e) => update(i, { region: e.target.value })} />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <TextInput value={a.postal} placeholder="Postal code" onChange={(e) => update(i, { postal: e.target.value })} />
+                <TextInput value={a.country} placeholder="Country" onChange={(e) => update(i, { country: e.target.value })} />
+              </div>
+            </div>
+          </div>
+        ))}
+        <button
+          onClick={() => onChange([...addresses, { ...EMPTY_ADDRESS }])}
+          className="inline-flex w-fit items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-accent hover:bg-accent-soft cursor-pointer"
+        >
+          <PlusIcon width={15} height={15} /> Add address
+        </button>
+      </div>
+    </div>
+  )
 }
 
 interface TypedListProps {

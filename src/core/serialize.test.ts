@@ -66,6 +66,29 @@ describe('vCard round-trip', () => {
     }
   })
 
+  it('does not let an unmodeled property inject extra vCard lines', () => {
+    // An X- property whose decoded value contains a newline must not break the structure.
+    const c = parseVcf('BEGIN:VCARD\nVERSION:3.0\nFN:X\nX-NOTE;ENCODING=QUOTED-PRINTABLE:a=0D=0Ainjected\nEND:VCARD').contacts[0]
+    const out = serializeContact(c, '3.0')
+    // Exactly one BEGIN and one END — no smuggled lines.
+    expect(out.match(/BEGIN:VCARD/g)).toHaveLength(1)
+    expect(out.match(/END:VCARD/g)).toHaveLength(1)
+    // Re-parsing yields a single clean card.
+    expect(parseVcf(out).contacts).toHaveLength(1)
+  })
+
+  it('folds multi-byte UTF-8 without splitting a character', () => {
+    const c = parseVcf('BEGIN:VCARD\nVERSION:3.0\nFN:X\nNOTE:' + 'é'.repeat(120) + '\nEND:VCARD').contacts[0]
+    const out = serializeContact(c, '4.0')
+    for (const line of out.split('\r\n')) {
+      // Each physical line is <= 75 octets and contains only whole characters.
+      const octets = new TextEncoder().encode(line).length
+      expect(octets).toBeLessThanOrEqual(75)
+    }
+    // And it round-trips intact.
+    expect(parseVcf(out).contacts[0].note).toBe('é'.repeat(120))
+  })
+
   it('serializeVcards joins multiple cards with a trailing newline', () => {
     const cs = parseVcf(sample + '\n' + sample).contacts
     const out = serializeVcards(cs, '3.0')
@@ -90,6 +113,15 @@ describe('CSV export', () => {
     const c = parseVcf('BEGIN:VCARD\nVERSION:3.0\nFN:Doe, John\nEND:VCARD').contacts[0]
     const csv = toCsv([c])
     expect(csv).toContain('"Doe, John"')
+  })
+
+  it('neutralizes spreadsheet formula injection', () => {
+    const c = parseVcf('BEGIN:VCARD\nVERSION:3.0\nFN:=HYPERLINK("http://evil")\nORG:+1+1\nEND:VCARD').contacts[0]
+    const csv = toCsv([c])
+    // Formula-leading cells get an apostrophe guard so Excel/Sheets show them literally.
+    expect(csv).toContain(`"'=HYPERLINK`)
+    expect(csv).toContain(`'+1+1`)
+    expect(csv).not.toMatch(/(^|,)=HYPERLINK/)
   })
 })
 

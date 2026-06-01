@@ -81,6 +81,15 @@ describe('mergeContacts', () => {
   it('throws on an empty group', () => {
     expect(() => mergeContacts([])).toThrow()
   })
+
+  it('preserves addresses that differ only by region or PO box', () => {
+    const cs = build(
+      'FN:Sam\nEMAIL:sam@x.com\nADR:;;1 Main St;Springfield;IL;62704;USA',
+      'FN:Sam\nEMAIL:sam@x.com\nADR:;;1 Main St;Springfield;MA;62704;USA',
+    )
+    const merged = mergeContacts(cs)
+    expect(merged.addresses).toHaveLength(2)
+  })
 })
 
 describe('mergeAllDuplicates', () => {

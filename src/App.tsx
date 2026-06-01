@@ -1,7 +1,9 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useDeferredValue, useMemo, useState } from 'react'
 import { type Contact, type MatchOptions, displayName, emptyName } from './core'
 import { useContacts } from './state/useContacts'
 import { useTheme } from './state/useTheme'
+import { useMediaQuery } from './state/useMediaQuery'
+import { ConfirmDialog, type ConfirmState } from './components/ConfirmDialog'
 import { SAMPLE_VCF } from './lib/sample'
 import { Dropzone } from './components/Dropzone'
 import { ContactTable } from './components/ContactTable'
@@ -49,9 +51,12 @@ function matches(c: Contact, q: string): boolean {
 export default function App() {
   const api = useContacts()
   const { theme, toggle } = useTheme()
+  const isDesktop = useMediaQuery('(min-width: 768px)')
   const [query, setQuery] = useState('')
+  const deferredQuery = useDeferredValue(query)
   const [openId, setOpenId] = useState<string | null>(null)
   const [dialog, setDialog] = useState<Dialog>(null)
+  const [confirm, setConfirm] = useState<ConfirmState | null>(null)
   const [toasts, setToasts] = useState<ToastItem[]>([])
   const [warnDismissed, setWarnDismissed] = useState(false)
 
@@ -61,9 +66,9 @@ export default function App() {
   const dismissToast = useCallback((id: number) => setToasts((t) => t.filter((x) => x.id !== id)), [])
 
   const filtered = useMemo(() => {
-    const q = query.trim()
+    const q = deferredQuery.trim()
     return q ? api.contacts.filter((c) => matches(c, q)) : api.contacts
-  }, [api.contacts, query])
+  }, [api.contacts, deferredQuery])
 
   const selectedContacts = useMemo(
     () => api.contacts.filter((c) => api.selected.has(c.id)),
@@ -76,8 +81,18 @@ export default function App() {
       const append = api.contacts.length > 0
       const { added, warnings } = api.loadFiles(files, append)
       setWarnDismissed(false)
-      if (added === 0) addToast('No contacts found in those files.', 'error')
-      else addToast(`Loaded ${added} contact${added === 1 ? '' : 's'}${warnings ? ` · ${warnings} warning${warnings === 1 ? '' : 's'}` : ''}.`)
+      if (added === 0) {
+        // Distinguish "this isn't a vCard" from "this vCard was empty".
+        const looksLikeVcard = files.some((f) => /BEGIN:VCARD/i.test(f.text))
+        if (!looksLikeVcard) {
+          const names = files.map((f) => f.name).join(', ')
+          addToast(`${names} doesn't look like a vCard (.vcf) file.`, 'error')
+        } else {
+          addToast('No contacts found in those files.', 'error')
+        }
+      } else {
+        addToast(`Loaded ${added} contact${added === 1 ? '' : 's'}${warnings ? ` · ${warnings} warning${warnings === 1 ? '' : 's'}` : ''}.`)
+      }
     },
     [api, addToast],
   )
@@ -159,8 +174,17 @@ export default function App() {
                 onClear={api.clearSelect}
                 onSelectAll={api.selectAll}
                 onDelete={() => {
-                  const n = api.deleteSelected()
-                  addToast(`Deleted ${n} contact${n === 1 ? '' : 's'}.`, 'info')
+                  const n = api.selected.size
+                  setConfirm({
+                    title: `Delete ${n} contact${n === 1 ? '' : 's'}?`,
+                    body: `This removes ${n} selected contact${n === 1 ? '' : 's'} from your working set. You can undo it afterwards.`,
+                    confirmLabel: `Delete ${n}`,
+                    danger: true,
+                    onConfirm: () => {
+                      const removed = api.deleteSelected()
+                      addToast(`Deleted ${removed} contact${removed === 1 ? '' : 's'}.`, 'info')
+                    },
+                  })
                 }}
               />
             )}
@@ -172,7 +196,8 @@ export default function App() {
                   selected={api.selected}
                   onToggle={api.toggleSelect}
                   onOpen={setOpenId}
-                  query={query}
+                  query={deferredQuery}
+                  isDesktop={isDesktop}
                 />
               ) : (
                 <div className="flex flex-col items-center gap-2 py-16 text-center">
@@ -234,6 +259,8 @@ export default function App() {
           }}
         />
       )}
+
+      {confirm && <ConfirmDialog state={confirm} onClose={() => setConfirm(null)} />}
 
       <ToastHost toasts={toasts} onDismiss={dismissToast} />
     </div>
@@ -405,22 +432,22 @@ function SelectionBar({ count, onClear, onSelectAll, onDelete }: { count: number
 
 function WarningBanner({ count, messages, onDismiss }: { count: number; messages: string[]; onDismiss: () => void }) {
   return (
-    <div className="rounded-xl border border-amber-400/40 bg-amber-50 px-4 py-3 text-sm dark:bg-amber-950/30">
+    <div className="rounded-xl border border-warning-border bg-warning-soft px-4 py-3 text-sm">
       <div className="flex items-start gap-2.5">
-        <span className="mt-0.5 shrink-0 text-amber-600 dark:text-amber-400">
+        <span className="mt-0.5 shrink-0 text-warning">
           <AlertIcon width={18} height={18} />
         </span>
         <div className="flex-1">
-          <p className="font-medium text-amber-800 dark:text-amber-200">
+          <p className="font-medium text-warning">
             {count} card{count === 1 ? '' : 's'} had issues while importing (they were skipped or partially read).
           </p>
-          <ul className="mt-1 list-inside list-disc text-amber-700/90 dark:text-amber-300/80">
+          <ul className="mt-1 list-inside list-disc text-warning/90">
             {messages.map((m, i) => (
               <li key={i} className="truncate">{m}</li>
             ))}
           </ul>
         </div>
-        <button onClick={onDismiss} className="shrink-0 cursor-pointer text-sm font-medium text-amber-700 hover:underline dark:text-amber-300">
+        <button onClick={onDismiss} className="shrink-0 cursor-pointer text-sm font-medium text-warning hover:underline">
           Dismiss
         </button>
       </div>

@@ -124,8 +124,11 @@ function mergeTyped(a: TypedValue[], b: TypedValue[]): TypedValue[] {
 
 function sameAddress(a: Address, b: Address): boolean {
   return (
+    a.poBox === b.poBox &&
+    a.ext === b.ext &&
     a.street === b.street &&
     a.locality === b.locality &&
+    a.region === b.region &&
     a.postal === b.postal &&
     a.country === b.country
   )

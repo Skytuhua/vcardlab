@@ -162,8 +162,13 @@ function unfold(text: string): string[] {
       line += physical[i + 1].slice(1)
       i++
     }
-    // Quoted-printable soft breaks: line is QP-encoded and ends with '='.
-    while (/quoted-printable/i.test(line) && /=\s*$/.test(line) && i + 1 < physical.length) {
+    // Quoted-printable soft breaks: the property is QP-encoded and the line ends with '='.
+    // Detect QP from the header (the part before the first colon) only — never from the
+    // value body, so a value that merely contains the text "quoted-printable" is unaffected.
+    const colonIdx = line.indexOf(':')
+    const header = colonIdx === -1 ? line : line.slice(0, colonIdx)
+    const isQP = /(^|;)\s*ENCODING\s*=\s*"?QUOTED-PRINTABLE/i.test(header)
+    while (isQP && /=\s*$/.test(line) && i + 1 < physical.length) {
       line = line.replace(/=\s*$/, '') + physical[i + 1]
       i++
     }
@@ -181,7 +186,7 @@ function decodeValue(parsed: ParsedLine): string {
   return parsed.rawValue
 }
 
-function applyProperty(contact: Contact, p: ParsedLine, warnings: ParseWarning[], cardIdx: number) {
+function applyProperty(contact: Contact, p: ParsedLine) {
   const value = decodeValue(p)
   switch (p.name) {
     case 'VERSION': {
@@ -246,7 +251,10 @@ function applyProperty(contact: Contact, p: ParsedLine, warnings: ParseWarning[]
       break
     case 'PHOTO':
     case 'LOGO': {
-      contact.photo = parsePhoto(p, value)
+      // Keep the first photo; preserve any additional PHOTO/LOGO in `extra` so nothing
+      // is silently dropped on a card that carries more than one image.
+      if (!contact.photo) contact.photo = parsePhoto(p, value)
+      else contact.extra.push(toRaw(p, value))
       break
     }
     case 'BEGIN':
@@ -255,8 +263,6 @@ function applyProperty(contact: Contact, p: ParsedLine, warnings: ParseWarning[]
     default:
       contact.extra.push(toRaw(p, value))
   }
-  void warnings
-  void cardIdx
 }
 
 function parsePhoto(p: ParsedLine, value: string): Photo {
@@ -333,7 +339,7 @@ export function parseVcf(text: string): ParseResult {
       continue
     }
     try {
-      applyProperty(current, parsed, warnings, cardIdx)
+      applyProperty(current, parsed)
     } catch (e) {
       warnings.push({
         card: cardIdx,
@@ -349,7 +355,7 @@ function finalize(c: Contact, contacts: Contact[], warnings: ParseWarning[], idx
   // A card with no identifying data at all is reported but still kept if it has anything.
   const hasAny =
     c.fn || c.n || (c.org && c.org.length) || c.emails.length || c.phones.length ||
-    c.addresses.length || c.urls.length || c.note || c.extra.length
+    c.addresses.length || c.urls.length || c.note || c.photo || c.extra.length
   if (!hasAny) {
     warnings.push({ card: idx, message: 'Empty card with no usable fields was dropped.' })
     return

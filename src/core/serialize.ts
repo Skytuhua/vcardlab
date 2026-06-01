@@ -23,19 +23,45 @@ function hasNonAscii(s: string): boolean {
   return false
 }
 
-/** Fold a single logical line to <=75 octets using CRLF + single space continuation. */
+function octetLen(ch: string): number {
+  const code = ch.codePointAt(0)!
+  if (code < 0x80) return 1
+  if (code < 0x800) return 2
+  if (code < 0x10000) return 3
+  return 4
+}
+
+/**
+ * Fold a single logical line to <=75 octets per physical line using CRLF + single space
+ * continuation. Counts UTF-8 octets (not UTF-16 units) and never splits a character.
+ */
 function fold(line: string): string {
-  if (line.length <= 75) return line
-  let out = ''
-  let rest = line
-  // First chunk 75, subsequent chunks 74 (the leading space counts).
-  out += rest.slice(0, 75)
-  rest = rest.slice(75)
-  while (rest.length > 0) {
-    out += CRLF + ' ' + rest.slice(0, 74)
-    rest = rest.slice(74)
+  // Fast path: pure ASCII within the limit.
+  if (line.length <= 75 && octetLenStr(line) === line.length) return line
+  const chars = Array.from(line) // split on code points, keeping surrogate pairs intact
+  const result: string[] = []
+  let cur = ''
+  let curOctets = 0
+  let limit = 75 // first line has no leading space
+  for (const ch of chars) {
+    const w = octetLen(ch)
+    if (curOctets + w > limit) {
+      result.push(cur)
+      cur = ''
+      curOctets = 0
+      limit = 74 // continuation lines start with a space that counts toward 75
+    }
+    cur += ch
+    curOctets += w
   }
-  return out
+  if (cur) result.push(cur)
+  return result.join(CRLF + ' ')
+}
+
+function octetLenStr(s: string): number {
+  let n = 0
+  for (const ch of s) n += octetLen(ch)
+  return n
 }
 
 interface PropOpts {
@@ -151,8 +177,11 @@ export function serializeContact(contact: Contact, version: OutputVersion): stri
 
   for (const raw of contact.extra) {
     const head = (raw.group ? raw.group + '.' : '') + raw.name
-    const params = raw.params.map(([k, v]) => `${k}=${v}`)
-    lines.push(fold([head, ...params].join(';') + ':' + raw.value))
+    // Sanitize parameter values (strip structural chars) and escape CR/LF in the value so
+    // an unmodeled property can't inject extra vCard lines on re-serialization.
+    const params = raw.params.map(([k, v]) => `${k}=${v.replace(/[;:\r\n]/g, ' ')}`)
+    const safeValue = raw.value.replace(/\r\n|\r|\n/g, '\\n')
+    lines.push(fold([head, ...params].join(';') + ':' + safeValue))
   }
 
   lines.push('END:VCARD')
@@ -167,8 +196,13 @@ export function serializeVcards(contacts: Contact[], version: OutputVersion): st
 // ---------- CSV ----------
 
 function csvCell(value: string): string {
-  if (/[",\n\r]/.test(value)) return '"' + value.replace(/"/g, '""') + '"'
-  return value
+  let v = value
+  // Neutralize spreadsheet formula injection: a cell starting with = + - @ (or a
+  // tab/CR lead-in) is treated as a formula by Excel/Sheets. Prefix with an apostrophe
+  // so it is shown literally. Quoting alone does NOT prevent this.
+  if (/^[=+\-@\t\r]/.test(v)) v = "'" + v
+  if (/[",\n\r]/.test(v)) return '"' + v.replace(/"/g, '""') + '"'
+  return v
 }
 
 /** Convert contacts to a spreadsheet/CRM-friendly CSV string. */

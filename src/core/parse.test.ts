@@ -122,6 +122,35 @@ describe('parseVcf — robustness', () => {
     const { contacts } = parseVcf(vcf)
     expect(contacts[0].urls[0].value).toBe('https://x.example')
   })
+
+  it('keeps a photo-only card instead of dropping it', () => {
+    const vcf = 'BEGIN:VCARD\nVERSION:3.0\nPHOTO;ENCODING=b;TYPE=JPEG:QUJD\nEND:VCARD'
+    const { contacts } = parseVcf(vcf)
+    expect(contacts).toHaveLength(1)
+    expect(contacts[0].photo?.data).toBe('QUJD')
+  })
+
+  it('keeps the first photo and preserves extra photos rather than dropping them', () => {
+    const vcf = 'BEGIN:VCARD\nVERSION:3.0\nFN:Two\nPHOTO;ENCODING=b;TYPE=JPEG:QUJD\nLOGO;ENCODING=b;TYPE=PNG:WFla\nEND:VCARD'
+    const { contacts } = parseVcf(vcf)
+    expect(contacts[0].photo?.data).toBe('QUJD')
+    expect(contacts[0].extra.some((e) => e.name === 'LOGO')).toBe(true)
+  })
+
+  it('does not treat a value containing "quoted-printable" as QP-encoded', () => {
+    // The NOTE ends with "=" but is NOT QP-encoded; the next line must stay separate.
+    const vcf = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:Edge',
+      'NOTE:I love quoted-printable =',
+      'EMAIL:edge@example.com',
+      'END:VCARD',
+    ].join('\r\n')
+    const { contacts } = parseVcf(vcf)
+    expect(contacts[0].note).toBe('I love quoted-printable =')
+    expect(contacts[0].emails[0].value).toBe('edge@example.com')
+  })
 })
 
 describe('displayName fallbacks', () => {

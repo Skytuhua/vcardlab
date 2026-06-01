@@ -10,7 +10,7 @@
   --surface: #ffffff;
   --surface-2: #f8fafc;
   --fg: #0f172a;
-  --muted: #64748b;
+  --muted: #586474; /* darkened from slate-500 for >=4.5:1 on muted-surface */
   --muted-surface: #f1f5f9;
   --border: #e2e8f0;
   --accent: #4f46e5;
@@ -20,8 +20,13 @@
   --success: #16a34a;
   --success-soft: #ecfdf5;
   --destructive: #dc2626;
+  --destructive-fg: #ffffff;
   --destructive-soft: #fef2f2;
+  --warning: #b45309;
+  --warning-soft: #fffbeb;
+  --warning-border: #fcd34d;
   --ring: #6366f1;
+  --overlay: rgba(2, 6, 23, 0.5);
 }
 
 .dark {
@@ -39,8 +44,13 @@
   --success: #22c55e;
   --success-soft: #0c2a1c;
   --destructive: #ef4444;
+  --destructive-fg: #ffffff;
   --destructive-soft: #2a1414;
+  --warning: #fbbf24;
+  --warning-soft: #2a2009;
+  --warning-border: rgba(251, 191, 36, 0.4);
   --ring: #818cf8;
+  --overlay: rgba(0, 0, 0, 0.6);
 }
 
 /* Map tokens to Tailwind color utilities (bg-surface, text-fg, border-border, …). */
@@ -59,7 +69,12 @@
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-destructive: var(--destructive);
+  --color-destructive-fg: var(--destructive-fg);
   --color-destructive-soft: var(--destructive-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-border: var(--warning-border);
+  --color-overlay: var(--overlay);
   --color-ring: var(--ring);
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
