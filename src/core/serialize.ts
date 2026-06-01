@@ -1,6 +1,6 @@
 // Serializers: Contact[] → vCard (2.1/3.0/4.0), CSV, or JSON. All pure, framework-free.
 
-import { type Contact, type TypedValue, displayName } from './model'
+import { type Contact, type TypedValue, outputName } from './model'
 import { encodeQuotedPrintable } from './quotedPrintable'
 
 export type OutputVersion = '2.1' | '3.0' | '4.0'
@@ -99,7 +99,11 @@ function renderProp(version: OutputVersion, o: PropOpts): string {
 }
 
 function typedLines(version: OutputVersion, name: string, items: TypedValue[]): string[] {
-  return items.map((it) => renderProp(version, { name, value: it.value, types: it.types }))
+  // Skip blank rows (e.g. an "Add email" field left empty in the editor) so the export
+  // doesn't contain empty "EMAIL;TYPE=HOME:" lines that some apps show as blank entries.
+  return items
+    .filter((it) => it.value.trim())
+    .map((it) => renderProp(version, { name, value: it.value, types: it.types }))
 }
 
 /** Serialize one contact to a vCard string (no trailing newline). */
@@ -108,7 +112,7 @@ export function serializeContact(contact: Contact, version: OutputVersion): stri
   lines.push('BEGIN:VCARD')
   lines.push('VERSION:' + version)
 
-  const fn = displayName(contact)
+  const fn = outputName(contact)
   lines.push(renderProp(version, { name: 'FN', value: fn }))
 
   if (contact.n) {
@@ -227,7 +231,7 @@ export function toCsv(contacts: Contact[]): string {
   const rows: string[] = [headers.map(csvCell).join(',')]
   for (const c of contacts) {
     const cells: string[] = [
-      displayName(c),
+      outputName(c),
       c.n?.given ?? '',
       c.n?.family ?? '',
       c.nickname ?? '',
@@ -264,7 +268,7 @@ export function toCsv(contacts: Contact[]): string {
 /** Convert contacts to a clean JSON string (drops internal-only fields). */
 export function toJson(contacts: Contact[]): string {
   const projected = contacts.map((c) => ({
-    name: displayName(c),
+    name: outputName(c),
     formattedName: c.fn,
     structuredName: c.n,
     nickname: c.nickname,

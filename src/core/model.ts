@@ -98,5 +98,18 @@ export function displayName(c: Contact): string {
   if (c.org && c.org.length && c.org[0]) return c.org[0]
   if (c.emails.length) return c.emails[0].value
   if (c.phones.length) return c.phones[0].value
-  return '(no name)'
+  return NO_NAME
+}
+
+/** Placeholder shown in the UI for a contact with no usable label. */
+export const NO_NAME = '(no name)'
+
+/**
+ * Name to write into exported files. Same as {@link displayName} but returns an
+ * empty string instead of the "(no name)" placeholder, so the UI-only placeholder
+ * never leaks into a user's actual .vcf / CSV / JSON.
+ */
+export function outputName(c: Contact): string {
+  const name = displayName(c)
+  return name === NO_NAME ? '' : name
 }

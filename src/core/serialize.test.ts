@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { parseVcf } from './parse'
 import { serializeVcards, serializeContact, toCsv, toJson } from './serialize'
+import { type Contact, emptyName } from './model'
 
 const sample = `BEGIN:VCARD
 VERSION:3.0
@@ -132,5 +133,41 @@ describe('JSON export', () => {
     expect(json[0].name).toBe('Jane Public')
     expect(json[0].emails[0].value).toBe('jane@acme.example')
     expect(json[0]).not.toHaveProperty('id')
+  })
+})
+
+describe('exported output stays clean', () => {
+  it('never leaks the "(no name)" UI placeholder into vCard / CSV / JSON', () => {
+    // A note-only card has no usable name; the UI shows "(no name)" but files must not.
+    const noteOnly = parseVcf('BEGIN:VCARD\nVERSION:3.0\nNOTE:just a note\nEND:VCARD').contacts[0]
+    const vcf = serializeContact(noteOnly, '3.0')
+    expect(vcf).not.toContain('(no name)')
+    expect(vcf).toContain('FN:') // FN is still present, just empty
+    expect(toCsv([noteOnly])).not.toContain('(no name)')
+    expect(JSON.parse(toJson([noteOnly]))[0].name).toBe('')
+  })
+
+  it('drops blank email/phone/URL rows so there are no empty property lines', () => {
+    const c: Contact = {
+      id: 'c1',
+      fn: 'Test Person',
+      n: emptyName(),
+      emails: [
+        { value: 'real@example.com', types: ['home'] },
+        { value: '', types: ['work'] }, // unfilled "Add email" row
+      ],
+      phones: [{ value: '   ', types: ['cell'] }], // whitespace-only
+      addresses: [],
+      urls: [{ value: '', types: [] }],
+      categories: [],
+      extra: [],
+      sourceVersion: '3.0',
+    }
+    const vcf = serializeContact(c, '3.0')
+    expect(vcf).toContain('EMAIL;TYPE=HOME:real@example.com')
+    // No empty value lines.
+    expect(vcf).not.toMatch(/EMAIL[^:\r\n]*:\r?\n/)
+    expect(vcf).not.toMatch(/TEL[^:]*:(\r|\n|$)/)
+    expect(vcf).not.toMatch(/^URL[^:]*:$/m)
   })
 })
